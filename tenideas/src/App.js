@@ -1,26 +1,57 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import Header from './Components/Header';
+import { domains, themes } from './Ideas'
+import IdeaGenerator from './Components/IdeaGenerator';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+class App extends Component {
+
+  state = {
+    themes,
+    category: '',
+    idea: "",
+    theme: []
+  }
+
+  getThemesByDomains() {
+
+    const initDomains = domains.reduce((acc, category) => ({
+      ...acc,
+      [category]: []
+    }), {})
+
+    return Object.entries(this.state.themes.reduce((acc, theme) => {
+      const { title } = theme
+      //console.log("acc[title]", acc[title])
+      acc[title] = acc[title] ? [...acc[title], theme] : [theme]
+      return acc
+    }, initDomains))
+  }
+
+
+  handleGenerate = (id) => {
+    console.log("selected Id is:", id)
+    // get respective id's array of ideas
+
+
+    //Generate Random idea.
+
+    //set to State
+
+  }
+
+  render() {
+    const themes = this.getThemesByDomains()
+    console.log("themes:", themes)
+    return (
+      <div>
+        <Header
+          domains={domains}
+          themes={themes} />    
+      </div>
+    )
+  }
 }
 
-export default App;
+export default App
